@@ -35,10 +35,28 @@
                 >Home</a
               >
             </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                aria-current="page"
+                href=" {% url 'login_app:register' %}"
+                >Register</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                aria-current="page"
+                href=" {% url 'login_app:login' %}"
+                >Login</a
+              > 
+            </li>
           </ul>
         </div>
       </div>
     </nav>
-    <div class="container">{% block body_block %} {% endblock %}</div>
+    <div class="container" style="padding-top: 20px">
+      {% block body_block %} {% endblock %}
+    </div>
   </body>
 </html>
