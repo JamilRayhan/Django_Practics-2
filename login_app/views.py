@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect,HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -28,8 +29,21 @@ def user_login(request):
             return HttpResponse("Username or Password is wrong")
     else:
         return render(request,'login_app/index.html',context={})
+    
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse ('login_app:index'))
+    
 def index(request):
     dict={}
+    if request.user.is_authenticated:
+        current_user=request.user
+        user_id=current_user.id
+        user_basic_info=User.objects.get(pk=user_id)
+        user_more_info=UserInfo.objects.get(user__pk=user_id)
+        dict={'user_basic_info':user_basic_info,'user_more_info':user_more_info}
+        
     return render(request,'login_app/index.html',context=dict)
 
 
