@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from login_app.forms import UserForm,UserInfoForm
 from login_app.models import UserInfo
+
 from django.contrib.auth import authenticate,login,logout
 from django.http import HttpResponseRedirect,HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -26,9 +27,9 @@ def user_login(request):
             else:
                 return HttpResponse("Account is not active!..")
         else:
-            return HttpResponse("Username or Password is wrong")
+            return HttpResponse('Username or Password is wrong..!')
     else:
-        return render(request,'login_app/index.html',context={})
+        return HttpResponseRedirect(reverse ('login_app:login'))
     
 @login_required
 def user_logout(request):
@@ -40,7 +41,7 @@ def index(request):
     if request.user.is_authenticated:
         current_user=request.user
         user_id=current_user.id
-        user_basic_info=User.objects.get(pk=user_id)
+        user_basic_info=User.objects.get(pk=user_id) 
         user_more_info=UserInfo.objects.get(user__pk=user_id)
         dict={'user_basic_info':user_basic_info,'user_more_info':user_more_info}
         
